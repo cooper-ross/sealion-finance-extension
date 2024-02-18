@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Sealion",
+    "description": "Sealion is a chrome extension that rounds up your online purchases and helps you invest them in the stock market!",
+    "version": "4.2",
+    "permissions": ["tabs", "scripting", "activeTab", "webNavigation", "storage"],
+    "action": {
+      "default_popup": "index.html"
+    },
+    "icons": {
+      "16": "assets/images/sealion.png",
+      "48": "assets/images/sealion.png",
+      "128": "assets/images/sealion.png"
+    }
+}
