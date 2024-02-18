@@ -20,15 +20,15 @@ function refreshMainPage() {
       $("#owned-stocks").html(`0`);
     }
 
-    if (result["savedMoney"] && result["savedMoney"] > 0) {
+    if (result["savedMoney"] && result["savedMoney"] > 1) {
       $(".alert").html(`<h2>Investment?</h2><p>Hey! It looks like you have a rounded up $${result["savedMoney"].toFixed(2)} to invest. Do you want to invest it now?</p><button class="btn">Invest</button>`);
       $(".btn").click(async function () {
         selectStocks();
       });
       $("#saved").html(`$${result["savedMoney"].toFixed(2)}`);
     } else {
-      $(".alert").html(`<p>Try buying something here to see your balance collect!</p>`);
-      $("#saved").html(`$0.00`);
+      $(".alert").html(`<p>You need to collect at least $1.00 to invest!</p>`);
+      $("#saved").html(`$${result["savedMoney"].toFixed(2)}`);
     }
 
   });
@@ -125,7 +125,13 @@ async function checkForRoundUp() {
     var activeTab = tabs[0];
     var activeTabUrl = activeTab.url;
 
-    if (activeTabUrl.includes('amazon.ca') || activeTabUrl.includes('amazon.com')) {
+    if (activeTabUrl.includes('amazon') ||
+        activeTabUrl.includes('ebay') ||
+        activeTabUrl.includes('etsy') ||
+        activeTabUrl.includes('bestbuy') ||
+        activeTabUrl.includes('walmart') ||
+        activeTabUrl.includes('target') ||
+        activeTabUrl.includes('costco')) {
       const extraToInvest = await roundUpTotal();
       console.log(extraToInvest);
 
@@ -148,7 +154,7 @@ async function displayStocks() {
       console.log(stock.symbol);
       const stockData = await getStockDescription(stock.symbol);
 
-      //const tldr = shortenText(stockData[0].description);
+      //const tldr = await shortenText(stockData[0].description);
       const shortened = stockData[0].description.split('.');
       const tldr = shortened[0] + '.' + shortened[1] + '.';
 
@@ -295,7 +301,7 @@ async function roundUpTotal() {
 
 function findTotalAndRound() {
   // We need to use normal JS here, not jQuery :(
-  const totalString = document.querySelector('.subtotal-amount').innerText;
+  const totalString = document.querySelector('.grand-total-price').innerText;
   if (totalString.includes('(')) return "0.00";
 
   const match = totalString.match(/(\d+\.\d+)/);
@@ -304,7 +310,7 @@ function findTotalAndRound() {
   const roundedTotal = Math.ceil(total);
   const difference = roundedTotal - total;
 
-  document.querySelector('.subtotal-amount').innerText = `${total} (+${difference.toFixed(2)})`;
+  document.querySelector('.grand-total-price').innerText = `${total} (+${difference.toFixed(2)})`;
 
   return difference.toFixed(2);
 };
