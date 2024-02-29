@@ -1,4 +1,4 @@
-# Sealion Finance Extension (CalgaryHacks 2024 Project)!
+# Sealion Finance Extension (CalgaryHacks 2024 First Place Winner)!
 Sealion is a chrome extension that rounds up your online purchases and helps you invest them in the stock market!
 
 
